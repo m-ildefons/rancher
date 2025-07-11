@@ -1,0 +1,15 @@
+{{- if .Values.postInstall.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "rancher.fullname" . }}-post-install
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "rancher.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+data:
+  post-install-hook.sh: |-
+{{ $.Files.Get "scripts/post-install-hook.sh" | indent 4 }}
+{{- end }}

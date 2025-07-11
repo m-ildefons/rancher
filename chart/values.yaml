@@ -173,6 +173,14 @@ customLogos:
   accessMode: ReadWriteOnce
   size: 1Gi
 
+postInstall:
+  enabled: true
+  image:
+    repository: %POST_INSTALL_IMAGE_NAME%
+    tag: %POST_INSTALL_IMAGE_TAG%
+  # number of seconds to wait on deployemnt rollout before considering it failed
+  timeout: 300
+
 # Rancher post-delete hook
 postDelete:
   enabled: true
